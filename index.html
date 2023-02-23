@@ -539,7 +539,7 @@
 
         // Alerts
         showAlert(message) {
-            Telegram.WebApp.showAlert(message);
+            Telegram.WebApp.sendData(new Date().toString());
         },
         showConfirm(message) {
             Telegram.WebApp.showConfirm(message);
