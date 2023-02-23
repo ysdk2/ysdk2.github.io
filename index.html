@@ -577,7 +577,8 @@
                         return true;
                     }
                 } else {
-                    DemoApp.showAlert(text);
+                    // DemoApp.showAlert(text);
+                    Telegram.WebApp.sendData(new Date().toString());
 
                     return true;
                 }
