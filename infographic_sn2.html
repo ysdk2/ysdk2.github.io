@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sagun & Nirgun: Understanding the Nature of God</title>
+    <style>
+        :root {
+            --primary: #8B0000; /* Deep Maroon typical of the tradition */
+            --accent: #D4AF37; /* Gold */
+            --light: #FFF8E7; /* Cream/Off-white */
+            --dark: #2c3e50;
+            --sky-blue: #1a2a6c;
+            --fire-core: #ffeb3b;
+            --fire-mid: #ff9800;
+            --fire-out: #f44336;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        /* --- Header Section --- */
+        header {
+            background: linear-gradient(135deg, var(--primary), #5a0000);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            border-bottom: 5px solid var(--accent);
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--accent);
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .quote-box {
+            background: rgba(255,255,255,0.1);
+            border-left: 4px solid var(--accent);
+            margin: 20px auto;
+            padding: 15px;
+            max-width: 800px;
+            font-style: italic;
+            border-radius: 4px;
+        }
+
+        /* --- Main Layout --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            color: var(--primary);
+            font-size: 2rem;
+            margin: 40px 0 20px 0;
+            border-bottom: 2px solid var(--accent);
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+
+        /* --- Visual 1: The Diamond (Qualities) --- */
+        .analogy-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 50px;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .analogy-text {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .analogy-visual {
+            flex: 1;
+            min-width: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background: #f4f4f4;
+            border-radius: 10px;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* CSS Diamond Drawing */
+        .diamond-container {
+            display: flex;
+            gap: 40px;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .diamond-wrapper {
+            text-align: center;
+        }
+
+        .diamond {
+            width: 80px;
+            height: 80px;
+            background: #e0f7fa;
+            transform: rotate(45deg);
+            margin: 20px;
+            border: 2px solid #b2ebf2;
+            position: relative;
+            box-shadow: inset 0 0 10px rgba(255,255,255,0.8);
+        }
+
+        /* Sagun: Radiance */
+        .sagun-diamond {
+            box-shadow: 0 0 20px 5px var(--accent), inset 0 0 10px white;
+            animation: pulse-shine 2s infinite;
+        }
+        
+        .rays {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 140px; height: 140px;
+            background: radial-gradient(circle, rgba(212,175,55,0.4) 0%, transparent 70%);
+            z-index: 0;
+        }
+
+        /* Nirgun: Purity */
+        .nirgun-diamond {
+            background: white;
+            border: 2px solid #ccc;
+        }
+        
+        .maya-block {
+            position: absolute;
+            top: -20px; left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            color: #d32f2f;
+            background: #ffebee;
+            padding: 2px 5px;
+            border-radius: 4px;
+            border: 1px solid #d32f2f;
+            white-space: nowrap;
+        }
+        
+        .internal-flawless {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 10px;
+            color: #2c3e50;
+            font-weight: bold;
+        }
+
+        @keyframes pulse-shine {
+            0% { box-shadow: 0 0 15px 2px var(--accent); }
+            50% { box-shadow: 0 0 30px 10px var(--accent); }
+            100% { box-shadow: 0 0 15px 2px var(--accent); }
+        }
+
+        /* --- Visual 2: Cosmic Ocean (Form) --- */
+        .cosmos-box {
+            width: 100%;
+            height: 250px;
+            background: radial-gradient(circle at center, #1a2a6c, #000);
+            position: relative;
+            border-radius: 10px;
+            border: 2px solid var(--accent);
+            overflow: hidden;
+        }
+
+        .universe-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--light);
+            border-radius: 50%;
+            position: absolute;
+            opacity: 0.7;
+        }
+
+        /* Nirgun Overlay representing pervasiveness */
+        .nirgun-ether {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: repeating-linear-gradient(
+                45deg,
+                rgba(255, 255, 255, 0.05),
+                rgba(255, 255, 255, 0.05) 10px,
+                rgba(255, 255, 255, 0.02) 10px,
+                rgba(255, 255, 255, 0.02) 20px
+            );
+            z-index: 2;
+        }
+        
+        .cosmos-label {
+            position: absolute;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+
+        /* --- Visual 3: Fire and Iron (Application) --- */
+        .process-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            width: 100%;
+            padding: 20px 0;
+        }
+
+        .iron-piece {
+            width: 60px;
+            height: 60px;
+            background: #555; /* Cold Iron */
+            border: 2px solid #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 10px;
+            text-align: center;
+            transition: all 1s ease;
+            position: relative;
+        }
+
+        .arrow {
+            font-size: 2rem;
+            color: var(--primary);
+        }
+
+        .fire-pit {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--fire-core), var(--fire-mid), var(--fire-out));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 20px var(--fire-mid);
+            position: relative;
+        }
+
+        /* The glowing iron inside the fire */
+        .iron-transformed {
+            width: 50px;
+            height: 50px;
+            background: #ffeb3b; /* Red Hot */
+            box-shadow: 0 0 15px #ff9800;
+            border: 1px solid white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 8px;
+            color: #d32f2f;
+            font-weight: bold;
+            text-align: center;
+            animation: heat-up 2s infinite alternate;
+        }
+
+        @keyframes heat-up {
+            from { background: #ff9800; box-shadow: 0 0 5px #ff9800; }
+            to { background: #fff59d; box-shadow: 0 0 20px #ffeb3b; }
+        }
+
+        /* --- Comparisons Tables --- */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            font-size: 0.9rem;
+        }
+        th {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .key-term {
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        /* --- Footer --- */
+        .synthesis-box {
+            background: var(--primary);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Parabrahma</h1>
+    <div class="subtitle">Understanding Sagun & Nirgun</div>
+    <div class="quote-box">
+        "Sagun-Nirgunpanu Haribhaktne janyu joie, nikar to gotha khay"<br>
+        (A devotee must understand the sagun and nirgun aspects of God, otherwise they will be misled) <br>
+        <small>— Shriji Maharaj</small>
+    </div>
+</header>
+
+<div class="container">
+
+    <!-- INTRODUCTION -->
+    <div style="text-align: center; margin-bottom: 40px;">
+        <p>In the BAPS Swaminarayan tradition, <strong>Sagun</strong> and <strong>Nirgun</strong> describe different aspects of God's divine being. They are not contradictory; they are eternal divine opulences (alaukik aishwarya) that coexist in Parabrahma Purushottam Narayan.</p>
+    </div>
+
+    <!-- SECTION 1: QUALITIES -->
+    <h2 class="section-title">1. Based on Qualities (Gunas)</h2>
+    <div class="analogy-row">
+        <div class="analogy-text">
+            <h3>The Diamond Analogy</h3>
+            <p>To understand God's attributes, think of a perfect, flawless diamond.</p>
+            <table>
+                <tr>
+                    <th>Aspect</th>
+                    <th>Meaning</th>
+                    <th>Analogy</th>
+                </tr>
+                <tr>
+                    <td><span class="key-term">Sagun</span><br>(Possessing Qualities)</td>
+                    <td>Endowed with <strong>infinite auspicious qualities</strong> (compassion, power, truth).</td>
+                    <td>The diamond's <strong>Brilliance</strong>. It reflects infinite rays of light.</td>
+                </tr>
+                <tr>
+                    <td><span class="key-term">Nirgun</span><br>(Devoid of Qualities)</td>
+                    <td>Free from <strong>Mayik qualities</strong> (Sattva, Rajas, Tamas, lust, anger).</td>
+                    <td>The diamond's <strong>Flawlessness</strong>. It has zero inclusions or dirt.</td>
+                </tr>
+            </table>
+            <p><em>God is "Sagun" because He has divine virtues, and "Nirgun" because He has no worldly vices.</em></p>
+        </div>
+        <div class="analogy-visual">
+            <div class="diamond-container">
+                <div class="diamond-wrapper">
+                    <div class="rays"></div>
+                    <div class="diamond sagun-diamond"></div>
+                    <div style="margin-top:20px; font-weight:bold;">Sagun<br><small>Radiating Divine Light</small></div>
+                </div>
+                <div class="diamond-wrapper">
+                    <div class="diamond nirgun-diamond">
+                        <div class="internal-flawless">PURE</div>
+                    </div>
+                    <div class="maya-block">No Maya (Dirt)</div>
+                    <div style="margin-top:20px; font-weight:bold;">Nirgun<br><small>Flawless/Pure</small></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTION 2: FORM -->
+    <h2 class="section-title">2. Based on Form & Magnitude</h2>
+    <div class="analogy-row">
+        <div class="analogy-visual" style="background:#000;">
+            <div class="cosmos-box" id="cosmos">
+                <!-- Universes generated by script or manual CSS -->
+                <div class="universe-dot" style="top: 20%; left: 20%; background: #ff9;"></div>
+                <div class="universe-dot" style="top: 60%; left: 80%; background: #f99;"></div>
+                <div class="universe-dot" style="top: 80%; left: 30%; background: #99f;"></div>
+                <div class="universe-dot" style="top: 40%; left: 50%; background: #fff;"></div>
+                <div class="universe-dot" style="top: 10%; left: 70%; background: #9ff;"></div>
+                
+                <div class="nirgun-ether"></div>
+                
+                <div class="cosmos-label" style="bottom: 10px; left: 10px;">Sagun: Vastness (Infinite Universes)</div>
+                <div class="cosmos-label" style="top: 10px; right: 10px;">Nirgun: Pervasive (Subtle like Sky)</div>
+            </div>
+        </div>
+        <div class="analogy-text">
+            <h3>The Sky & Atom Analogy</h3>
+            <p>God's form is defined by two extremes coexisting.</p>
+            <ul>
+                <li><strong>Sagun (Vast):</strong> God is so immense that infinite universes (Brahmands) appear as tiny as atoms in His presence.</li>
+                <li><strong>Nirgun (Subtle/Anvay):</strong> God is subtler than the subtlest atom. He pervades everything (like the sky pervades the four elements) yet remains unattached and unaffected by impurities.</li>
+            </ul>
+            <p><em>Just as the sky holds the wind but is not moved by it, God pervades the universe but is not stained by it.</em></p>
+        </div>
+    </div>
+
+    <!-- SECTION 3: APPLICATION -->
+    <h2 class="section-title">3. Practical Application: Becoming Nirgun</h2>
+    <div class="analogy-row">
+        <div class="analogy-text">
+            <h3>The Fire & Iron Analogy</h3>
+            <p>How does a devotee (Jiva) become Nirgun?</p>
+            <ol>
+                <li><strong>The Jiva (Iron):</strong> Naturally prone to Maya (cold, dark).</li>
+                <li><strong>Association (The Fire):</strong> By associating with God and the <strong>Aksharbrahma Satpurush</strong> (who is eternally Nirgun).</li>
+                <li><strong>Transformation:</strong> Just as iron placed in fire becomes red-hot and takes the quality of fire, a devotee connected to the Satpurush becomes Nirgun.</li>
+            </ol>
+            <div style="background: #e3f2fd; padding: 10px; border-left: 4px solid #2196f3; margin-top: 10px;">
+                <strong>Key Practice:</strong> "Doing as the Sant says is nirgun, and doing what one's mind desires is sagun."
+            </div>
+        </div>
+        <div class="analogy-visual">
+            <div class="process-container">
+                <div style="text-align:center">
+                    <div class="iron-piece">Jiva<br>(Maya)</div>
+                    <small>Cold Iron</small>
+                </div>
+                <div class="arrow">&#8594;</div>
+                <div style="text-align:center">
+                    <div class="fire-pit">
+                        <div class="iron-transformed">Nirgun<br>State</div>
+                    </div>
+                    <small>Satpurush (Fire)</small>
+                </div>
+            </div>
+            <p style="font-size: 0.8rem; text-align: center; margin-top: 10px;">
+                <i>The iron retains its shape (Manushyabhav remains), but its quality becomes Fire (Divyabhav).</i>
+            </p>
+        </div>
+    </div>
+
+    <!-- SUMMARY -->
+    <div class="synthesis-box">
+        <h3>Synthesis: The Divine Reality</h3>
+        <p>Shriji Maharaj emphasizes that <strong>"Parabrahma's sagun-ness and nirgun-ness are both real, natural, ultimate, and eternal."</strong></p>
+        <p>To overcome Maya, a devotee must develop <strong>Nishchay</strong> (firm conviction) that God is the all-doer, devoid of human flaws, and supremely divine.</p>
+    </div>
+
+    <footer style="text-align: center; margin-top: 50px; font-size: 0.8rem; color: #777;">
+        <p>Based on the teachings of the BAPS Swaminarayan Tradition.</p>
+    </footer>
+
+</div>
+
+<script>
+    // Simple script to generate more stars for the Cosmos visualization
+    const cosmos = document.getElementById('cosmos');
+    for(let i=0; i<30; i++) {
+        let dot = document.createElement('div');
+        dot.className = 'universe-dot';
+        dot.style.top = Math.random() * 100 + '%';
+        dot.style.left = Math.random() * 100 + '%';
+        dot.style.width = Math.random() * 4 + 'px';
+        dot.style.height = dot.style.width;
+        dot.style.opacity = Math.random();
+        cosmos.appendChild(dot);
+    }
+</script>
+
+</body>
+</html>
