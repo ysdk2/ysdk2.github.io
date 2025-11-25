@@ -1,124 +1,188 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ekantik Dharma: The Spaceship to Akshardham</title>
+    <title>Ekantik Dharma: Immersive Experience</title>
     <style>
         :root {
             --space-bg: #0b0d17;
-            --star-color: #ffffff;
             --text-color: #ecf0f1;
             --accent-gold: #f1c40f;
-            --dharma-color: #e67e22; /* Orange */
-            --gnan-color: #3498db;   /* Blue */
-            --vairagya-color: #2ecc71; /* Green */
-            --bhakti-color: #9b59b6; /* Purple/Gold mix */
-            --mahatmya-color: #c0392b; /* Red */
+            --dharma-color: #e67e22;
+            /* Orange */
+            --gnan-color: #3498db;
+            /* Blue */
+            --vairagya-color: #2ecc71;
+            /* Green */
+            --bhakti-color: #9b59b6;
+            /* Purple */
+            --mahatmya-color: #c0392b;
+            /* Red */
+            --card-bg: rgba(22, 27, 34, 0.85);
         }
 
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--space-bg);
             color: var(--text-color);
-            overflow-x: hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
         }
 
-        /* Dynamic Star Background */
-        .stars {
-            position: fixed;
-            top: 0;
-            left: 0;
+        /* Allow scrolling in main menu for small screens */
+        #mainMenu {
+            overflow-y: auto;
+        }
+
+        /* --- UI ELEMENTS --- */
+        .ui-layer {
+            position: absolute;
+            z-index: 10;
             width: 100%;
-            height: 100%;
-            z-index: -1;
-            background-image: 
-                radial-gradient(2px 2px at 20px 30px, #eee, rgba(0,0,0,0)),
-                radial-gradient(2px 2px at 40px 70px, #fff, rgba(0,0,0,0)),
-                radial-gradient(2px 2px at 50px 160px, #ddd, rgba(0,0,0,0)),
-                radial-gradient(2px 2px at 90px 40px, #fff, rgba(0,0,0,0)),
-                radial-gradient(2px 2px at 130px 80px, #fff, rgba(0,0,0,0));
-            background-repeat: repeat;
-            background-size: 200px 200px;
-            animation: twinkle 5s infinite linear;
+            pointer-events: none;
+            transition: opacity 0.5s;
         }
 
-        @keyframes twinkle {
-            from {background-position: 0 0;}
-            to {background-position: 0 200px;}
-        }
-
-        /* Header */
         header {
             text-align: center;
-            padding: 40px 20px;
-            max-width: 800px;
+            padding-top: 30px;
+            pointer-events: auto;
+            /* No margin bottom needed as we handle spacing in main-menu padding */
         }
 
         h1 {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             color: var(--accent-gold);
             text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 10px;
+            letter-spacing: 3px;
+            text-shadow: 0 0 15px rgba(241, 196, 15, 0.6);
+            margin-bottom: 5px;
         }
 
         .subtitle {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             color: #bdc3c7;
             font-style: italic;
         }
 
-        /* Main Content Layout */
-        .main-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 50px;
-            padding: 20px;
-            max-width: 1200px;
-            width: 100%;
+        /* --- BACK BUTTON --- */
+        .back-btn {
+            position: fixed;
+            top: 30px;
+            left: 30px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid white;
+            color: white;
+            padding: 10px 25px;
+            border-radius: 30px;
+            cursor: pointer;
+            z-index: 9999;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(-20px);
         }
 
-        /* The Spaceship Construction */
-        .rocket-container {
-            position: relative;
-            width: 300px;
+        .back-btn.visible {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
+
+        .back-btn:hover {
+            background: white;
+            color: black;
+            box-shadow: 0 0 15px white;
+        }
+
+        /* --- MAIN MENU LAYOUT --- */
+        .main-menu {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding-bottom: 50px; /* For flames */
+            /* FIXED: Start content from top with padding to avoid overlap */
+            justify-content: flex-start;
+            padding-top: 140px;
+            transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55), opacity 0.5s;
+            z-index: 5;
+            padding-bottom: 80px;
+        }
+
+        .main-menu.hidden {
+            transform: scale(0.5) translateY(100vh);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .menu-content {
+            display: flex;
+            align-items: flex-start;
+            /* Align top so rocket doesn't float weirdly */
+            justify-content: center;
+            gap: 100px;
+            width: 100%;
+            max-width: 1200px;
+            flex-wrap: wrap;
+            padding: 0 20px;
+        }
+
+        /* --- LEFT SIDE: ROCKET CONSTRUCTION --- */
+        .rocket-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 20px;
         }
 
         .destination {
             text-align: center;
-            margin-bottom: 20px;
+            /* FIXED: Increased margin to separate Orb text from Rocket Nose */
+            margin-bottom: 50px;
             animation: float 3s ease-in-out infinite;
+            cursor: default;
         }
 
         .akshardham-orb {
-            width: 80px;
-            height: 80px;
+            width: 110px;
+            height: 110px;
             background: radial-gradient(circle at 30% 30%, #fff, #f1c40f, #e67e22);
             border-radius: 50%;
-            box-shadow: 0 0 30px #f1c40f;
-            margin: 0 auto 10px;
+            box-shadow: 0 0 50px #f1c40f;
+            margin: 0 auto 15px;
         }
 
-        /* Rocket Parts */
+        .destination h3 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+        }
+
+        .rocket-stack {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        /* Common Rocket Part Styles */
         .rocket-part {
             width: 180px;
-            border: 2px solid rgba(255,255,255,0.2);
+            border: 2px solid rgba(255, 255, 255, 0.2);
             position: relative;
             cursor: pointer;
             transition: transform 0.3s, box-shadow 0.3s;
@@ -128,390 +192,878 @@
             text-align: center;
             font-weight: bold;
             color: #fff;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
-            z-index: 5; /* Ensure parts are above flames */
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+            z-index: 5;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
         }
 
         .rocket-part:hover {
             transform: scale(1.05);
             z-index: 20;
-            box-shadow: 0 0 20px rgba(255,255,255,0.5);
+            box-shadow: 0 0 25px rgba(255, 255, 255, 0.6);
         }
 
-        /* 1. Nose Cone (Bhakti) */
+        /* 1. BHAKTI (Nose Cone) */
         .nose-cone {
             height: 120px;
             background: linear-gradient(135deg, var(--bhakti-color), #8e44ad);
             border-radius: 50% 50% 10% 10%;
             flex-direction: column;
-            padding-top: 30px;
+            padding-top: 20px;
         }
-        
+
         .magnet-icon {
-            width: 30px;
-            height: 30px;
-            border: 4px solid #fff;
+            width: 40px;
+            height: 40px;
+            border: 5px solid #fff;
             border-bottom: none;
-            border-radius: 30px 30px 0 0;
+            border-radius: 40px 40px 0 0;
             margin-bottom: 5px;
         }
 
-        /* 2. Body Segment 1 (Vairagya) */
+        /* 2. VAIRAGYA (Green Body) */
         .body-segment-1 {
             height: 100px;
             background: linear-gradient(90deg, #27ae60, var(--vairagya-color), #27ae60);
-            width: 180px;
             background-size: 200% 200%;
             animation: shine 3s infinite linear;
         }
 
         @keyframes shine {
-            0% {background-position: 0% 50%;}
-            100% {background-position: 100% 50%;}
+            0% {
+                background-position: 0% 50%;
+            }
+
+            100% {
+                background-position: 100% 50%;
+            }
         }
 
-        /* 3. Body Segment 2 (Gnan) */
+        /* 3. GNAN (Blue Body + Window) */
         .body-segment-2 {
             height: 100px;
             background: var(--gnan-color);
+            flex-direction: column;
         }
 
         .window {
-            width: 50px;
-            height: 50px;
+            width: 40px;
+            height: 40px;
             background: #81ecec;
             border-radius: 50%;
-            border: 4px solid #95a5a6;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+            border: 3px solid #95a5a6;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+            margin-bottom: 5px;
         }
 
-        /* 4. Base & Fins (Dharma) */
+        /* 4. DHARMA (Base + Fins) */
         .base-segment {
             height: 80px;
-            width: 180px;
             background: var(--dharma-color);
             border-radius: 0 0 10px 10px;
+            position: relative;
+            /* Context for fins */
+            z-index: 4;
         }
 
-        .fin-left, .fin-right {
+        /* Fins attached to Dharma */
+        .fin-left,
+        .fin-right {
             position: absolute;
             bottom: 0;
             width: 0;
             height: 0;
             border-bottom: 80px solid #d35400;
-            z-index: 1;
+            /* Darker orange */
+            z-index: -1;
+            /* Behind the main block */
         }
 
         .fin-left {
             left: -40px;
             border-right: 40px solid transparent;
-            border-left: 0;
         }
 
         .fin-right {
             right: -40px;
             border-left: 40px solid transparent;
-            border-right: 0;
         }
 
-        /* 5. Fuel/Flame (Mahatmya) */
+        /* 5. FUEL (Flames - Mahatmya) */
         .flame-container {
-            position: absolute;
-            bottom: -60px;
             display: flex;
             justify-content: center;
-            width: 100%;
-            z-index: 0; /* Behind the rocket base */
+            align-items: flex-start;
+            margin-top: -5px;
+            /* slight overlap with base */
             cursor: pointer;
+            padding-top: 5px;
+            z-index: 3;
+            transition: transform 0.3s;
+        }
+
+        .flame-container:hover {
+            transform: scale(1.1);
         }
 
         .flame {
-            width: 40px;
-            height: 60px;
+            width: 35px;
+            height: 50px;
             background: linear-gradient(to top, #f1c40f, var(--mahatmya-color));
             border-radius: 50% 50% 20% 20%;
             animation: flicker 0.2s infinite alternate;
-            margin: 0 5px;
+            margin: 0 3px;
             box-shadow: 0 0 20px var(--mahatmya-color);
         }
 
         .flame.main {
-            height: 80px;
-            width: 50px;
+            height: 70px;
+            width: 45px;
         }
 
         @keyframes flicker {
-            0% {transform: scale(1);}
-            100% {transform: scale(1.1) translateY(2px);}
+            0% {
+                transform: scale(1);
+            }
+
+            100% {
+                transform: scale(1.1) translateY(2px);
+            }
         }
 
-        /* Interactive Info Cards (Tooltips) */
-        .info-card {
-            position: absolute;
-            left: 220px; /* Default for rocket parts */
-            top: 50%;
-            transform: translateY(-50%);
-            width: 280px;
-            background: rgba(255, 255, 255, 0.95);
-            color: #2c3e50;
-            padding: 15px;
-            border-radius: 8px;
-            font-size: 0.9rem;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-            pointer-events: none;
-            z-index: 100;
-            text-align: left;
-            font-weight: normal;
-            text-shadow: none;
-        }
 
-        .info-card::before {
-            content: "";
-            position: absolute;
-            left: -10px;
-            top: 50%;
-            transform: translateY(-50%);
-            border-width: 10px 10px 10px 0;
-            border-style: solid;
-            border-color: transparent rgba(255, 255, 255, 0.95) transparent transparent;
-        }
-
-        /* Specific fix for the Mahatmya (Fuel) Card */
-        /* Move it further right to clear the fins (Rocket width 300, Fin edge approx 280) */
-        .fuel-card {
-            left: 290px !important; 
-            top: 10px !important;
-            bottom: auto !important;
-            transform: none !important;
-        }
-
-        .rocket-part:hover .info-card,
-        .flame-container:hover .info-card {
-            opacity: 1;
-            visibility: visible;
-        }
-        
-        /* Slight slide animation for desktop */
-        .rocket-part:hover .info-card {
-            left: 230px;
-        }
-        .flame-container:hover .fuel-card {
-            left: 300px !important; /* Slide out slightly further on hover */
-        }
-
-        .card-title {
-            font-weight: bold;
-            font-size: 1.1rem;
-            margin-bottom: 5px;
-            display: block;
-            border-bottom: 2px solid #ddd;
-            padding-bottom: 3px;
-        }
-        
-        .card-analogy {
-            color: #e74c3c;
-            font-weight: bold;
-            display: block;
-            margin: 5px 0;
-        }
-
-        /* The Mechanic Section */
-        .mechanic-section {
-            background: rgba(255,255,255,0.1);
-            border-radius: 15px;
+        /* --- RIGHT SIDE: MECHANIC CARD --- */
+        .mechanic-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
             padding: 30px;
             max-width: 400px;
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255,255,255,0.2);
-            height: fit-content;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            text-align: left;
+            /* FIXED: Align nicely with rocket top */
+            margin-top: 100px;
         }
 
-        .mechanic-title {
-            color: var(--accent-gold);
-            font-size: 1.5rem;
-            margin-bottom: 15px;
+        .mechanic-header {
             display: flex;
             align-items: center;
             gap: 10px;
+            margin-bottom: 15px;
+            color: var(--accent-gold);
+            font-size: 1.4rem;
+            font-weight: bold;
         }
 
-        .mechanic-icon {
-            font-size: 2rem;
+        .mechanic-card h3 {
+            font-size: 1.1rem;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .mechanic-card p {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: #ddd;
+            margin-bottom: 15px;
         }
 
         .quote-box {
-            background: rgba(0,0,0,0.3);
+            background: rgba(0, 0, 0, 0.3);
             border-left: 4px solid var(--accent-gold);
-            padding: 10px;
-            margin-top: 15px;
+            padding: 12px;
+            margin: 20px 0;
             font-style: italic;
             font-size: 0.9rem;
+            color: #ecf0f1;
+        }
+
+        .build-list {
+            list-style-type: none;
+            margin-top: 10px;
+        }
+
+        .build-list li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+            color: #ddd;
+        }
+
+        .build-list li::before {
+            content: "•";
+            color: var(--accent-gold);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        /* Responsive spacing for mobile */
+        @media (max-width: 850px) {
+            .main-menu {
+                padding-top: 120px;
+            }
+
+            .menu-content {
+                flex-direction: column;
+                align-items: center;
+                gap: 50px;
+            }
+
+            .mechanic-card {
+                margin-top: 0;
+            }
+        }
+
+        /* --- IMMERSIVE WORLD CSS --- */
+        .world-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: black;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 1s;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .world-container.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .hud-panel {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 600px;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 20px;
+            color: #fff;
+            z-index: 20;
+            opacity: 0;
+            transition: opacity 1s 0.5s;
+        }
+
+        .world-container.active .hud-panel {
+            opacity: 1;
+        }
+
+        .hud-title {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+            color: var(--accent-gold);
+        }
+
+        .hud-analogy {
+            font-weight: bold;
+            color: #3498db;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .hud-desc {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: #ddd;
+        }
+
+        .hud-quote {
+            margin-top: 10px;
+            font-style: italic;
+            border-left: 3px solid var(--accent-gold);
+            padding-left: 10px;
+            font-size: 0.9rem;
+            color: #bdc3c7;
+        }
+
+        /* --- WORLD SCENES --- */
+        /* DHARMA */
+        .dharma-scene {
+            perspective: 600px;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, #0f0500 0%, #3e1601 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .road {
+            width: 300px;
+            height: 200%;
+            background: #333;
+            position: absolute;
+            bottom: -50px;
+            transform: rotateX(80deg);
+            transform-origin: bottom;
+            border-left: 10px solid var(--dharma-color);
+            border-right: 10px solid var(--dharma-color);
+            box-shadow: 0 0 50px var(--dharma-color);
+        }
+
+        .road-stripes {
+            width: 10px;
+            height: 100%;
+            background: repeating-linear-gradient(to bottom, #fff 0px, #fff 50px, transparent 50px, transparent 100px);
+            margin: 0 auto;
+            animation: drive-fast 0.5s linear infinite;
+        }
+
+        @keyframes drive-fast {
+            from {
+                background-position: 0 0;
+            }
+
+            to {
+                background-position: 0 100px;
+            }
+        }
+
+        /* GNAN */
+        .gnan-scene {
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, #001f3f, #000);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .body-outline {
+            width: 200px;
+            height: 350px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 100px;
+            position: absolute;
+            transition: transform 2s;
+        }
+
+        .soul-light {
+            width: 180px;
+            height: 330px;
+            background: white;
+            border-radius: 90px;
+            box-shadow: 0 0 50px var(--gnan-color), inset 0 0 20px var(--gnan-color);
+            position: absolute;
+            opacity: 0.8;
+            filter: blur(5px);
+            animation: pulse-soul 2s infinite;
+        }
+
+        @keyframes pulse-soul {
+            0% {
+                opacity: 0.6;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0.6;
+            }
+        }
+
+        .gnan-active .body-outline {
+            transform: translateX(-120px) scale(0.9);
+            opacity: 0.5;
+        }
+
+        .gnan-active .soul-light {
+            transform: translateX(120px);
+            filter: blur(0px);
+            opacity: 1;
+        }
+
+        /* VAIRAGYA */
+        .vairagya-scene {
+            width: 100%;
+            height: 100%;
+            background: #051405;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .devotee-core {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 80px;
+            background: var(--vairagya-color);
+            border-radius: 50%;
+            box-shadow: 0 0 40px var(--vairagya-color);
+            z-index: 2;
+        }
+
+        .shield-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 160px;
+            height: 160px;
+            border: 3px solid rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            animation: spin-shield 4s linear infinite;
+            box-shadow: 0 0 20px rgba(46, 204, 113, 0.5);
+        }
+
+        @keyframes spin-shield {
+            0% {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+
+            100% {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+
+        .debris {
+            position: absolute;
+            background: #555;
+            border-radius: 50%;
+            opacity: 0.9;
+        }
+
+        /* BHAKTI */
+        .bhakti-scene {
+            width: 100%;
+            height: 100%;
+            background: #11001a;
+            position: relative;
+        }
+
+        .magnet-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 5rem;
+            color: var(--bhakti-color);
+            filter: drop-shadow(0 0 20px var(--bhakti-color));
+            z-index: 2;
+        }
+
+        .bhakti-particle {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+        }
+
+        /* MAHATMYA */
+        .mahatmya-scene {
+            width: 100%;
+            height: 100%;
+            background: #220000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .sun-core {
+            width: 100px;
+            height: 100px;
+            background: #fff;
+            border-radius: 50%;
+            box-shadow:
+                0 0 60px #f1c40f,
+                0 0 120px #e74c3c,
+                0 0 200px #c0392b;
+            animation: sun-pulse 2s infinite alternate;
+        }
+
+        .ray {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 200vw;
+            height: 2px;
+            background: rgba(241, 196, 15, 0.2);
+            transform-origin: left center;
+        }
+
+        @keyframes sun-pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            100% {
+                transform: scale(1.5);
+            }
         }
 
         @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
-        }
-
-        .nav-helper {
-            margin-top: 20px;
-            color: var(--accent-gold);
-            font-size: 0.9rem;
-            text-align: center;
-            display: none; 
-        }
-        @media (hover: none) {
-            .nav-helper { display: block; }
-        }
-
-        /* Responsiveness for mobile */
-        @media (max-width: 800px) {
-            .main-container {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            /* Center tooltips below the items on mobile */
-            .info-card, .fuel-card {
-                left: 50% !important; /* Force override for fuel card */
-                top: 100% !important;
-                transform: translateX(-50%) !important;
-                width: 250px;
-                margin-top: 15px;
-                z-index: 200;
-                position: absolute;
+            0% {
+                transform: translateY(0px);
             }
 
-            .info-card::before {
-                left: 50%;
-                top: -10px;
-                transform: translateX(-50%) rotate(90deg);
-                border-color: transparent rgba(255, 255, 255, 0.95) transparent transparent;
-                /* Adjust arrow direction to point up */
-                border-width: 0 10px 10px 10px;
-                border-color: transparent transparent rgba(255, 255, 255, 0.95) transparent;
+            50% {
+                transform: translateY(-10px);
+            }
+
+            100% {
+                transform: translateY(0px);
             }
         }
     </style>
 </head>
+
 <body>
 
-    <div class="stars"></div>
-
-    <header>
-        <h1>Ekantik Dharma</h1>
-        <div class="subtitle">The Path to Ultimate Liberation (Akshardham)</div>
-        <p class="nav-helper">Tap the rocket parts to see the details!</p>
-    </header>
-
-    <div class="main-container">
-        
-        <!-- THE ROCKET VISUAL -->
-        <div class="rocket-container">
-            
-            <!-- Destination -->
-            <div class="destination">
-                <div class="akshardham-orb"></div>
-                <h3>Goal: Akshardham</h3>
-                <small>Ultimate Liberation</small>
-            </div>
-
-            <!-- 1. BHAKTI (Engine/Magnet) -->
-            <div class="rocket-part nose-cone">
-                <div class="magnet-icon"></div>
-                <span>BHAKTI</span>
-                
-                <div class="info-card">
-                    <span class="card-title" style="color:var(--bhakti-color)">4. Bhakti (Devotion)</span>
-                    <span class="card-analogy">Analogy: The Super Magnet Engine</span>
-                    <p>Just as a magnet sticks to iron, Bhakti is when the mind sticks to God's Murti like "a pebble sticks to butter."</p>
-                    <p><strong>Definition:</strong> Intense affection for God combined with knowledge of His greatness. Believing oneself to be Aksharrup.</p>
-                </div>
-            </div>
-
-            <!-- 2. VAIRAGYA (Non-Stick Coating) -->
-            <div class="rocket-part body-segment-1">
-                <span>VAIRAGYA</span>
-                
-                <div class="info-card">
-                    <span class="card-title" style="color:var(--vairagya-color)">3. Vairagya (Detachment)</span>
-                    <span class="card-analogy">Analogy: The Non-Stick Coating</span>
-                    <p>A coating that prevents space debris (worldly desires) from sticking to the ship. Even if you have nice things, you don't care about them.</p>
-                    <p><strong>Definition:</strong> Having no attachment to anything created (Maya). Keeping the mind constantly focused only on God.</p>
-                </div>
-            </div>
-
-            <!-- 3. GNAN (Map/Window) -->
-            <div class="rocket-part body-segment-2">
-                <div class="window"></div>
-                <span style="position: absolute; bottom: 5px;">GNAN</span>
-                
-                <div class="info-card">
-                    <span class="card-title" style="color:var(--gnan-color)">2. Gnan (Knowledge)</span>
-                    <span class="card-analogy">Analogy: X-Ray Glasses & Map</span>
-                    <p>Knowing the difference between the ship (body) and the pilot (soul), like a "sword and its sheath."</p>
-                    <p><strong>Definition:</strong> Realizing one's true self as Atma, distinct from the body and Gunas. Identifying with Aksharbrahma.</p>
-                </div>
-            </div>
-
-            <!-- 4. DHARMA (Steering/Fins) -->
-            <div class="rocket-part base-segment">
-                <span>DHARMA</span>
-                <div class="fin-left"></div>
-                <div class="fin-right"></div>
-                
-                <div class="info-card">
-                    <span class="card-title" style="color:var(--dharma-color)">1. Dharma (Righteousness)</span>
-                    <span class="card-analogy">Analogy: Steering Wheel & Navigation</span>
-                    <p>Keeps the ship on the correct path. Without it, you crash.</p>
-                    <p><strong>Definition:</strong> Following God's commands (non-violence, celibacy, panch vartaman). No bad thoughts arising in the mind.</p>
-                </div>
-            </div>
-
-            <!-- 5. MAHATMYA (Fuel) -->
-            <div class="flame-container">
-                <div class="flame"></div>
-                <div class="flame main"></div>
-                <div class="flame"></div>
-                
-                <!-- Use the fuel-card class to apply the positioning fix -->
-                <div class="info-card fuel-card">
-                    <span class="card-title" style="color:var(--mahatmya-color)">Mahatmya (Greatness)</span>
-                    <span class="card-analogy">Analogy: The Infinite Power Fuel</span>
-                    <p>Without this fuel, the engine (Bhakti) stops working. It makes faith and trust strong.</p>
-                    <p><strong>Definition:</strong> The profound understanding of God's immeasurable greatness. Realizing God is infinitely great.</p>
-                </div>
-            </div>
-
-        </div>
-
-        <!-- THE GUIDE SECTION -->
-        <div class="mechanic-section">
-            <div class="mechanic-title">
-                <span class="mechanic-icon">👨‍🚀</span>
-                The Pilot & Mechanic
-            </div>
-            <h3>The Aksharbrahma Satpurush</h3>
-            <p>You cannot build this spaceship alone.</p>
-            <p>The <strong>Satpurush</strong> is the Master Mechanic who helps you install Dharma, Gnan, Vairagya, and Bhakti.</p>
-            
-            <div class="quote-box">
-                "Such an Ekantik Dharma is attained only through the association of such an Ekantik Purush."
-            </div>
-            <br>
-            <p><strong>How to build it?</strong></p>
-            <ul style="margin-left: 20px; margin-top: 10px;">
-                <li>Associate with the Satpurush (Prasang).</li>
-                <li>He gives the strength to imbibe these qualities.</li>
-                <li>He connects you to the command of Shriji Maharaj.</li>
-            </ul>
-        </div>
-
+    <div
+        style="position:fixed; top:0; left:0; width:100%; height:100%; z-index:-1; background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIyMCIgY3k9IjMwIiByPSIxIiBmaWxsPSIjZmZmIiBvcGFjaXR5PSIwLjUiLz48Y2lyY2xlIGN4PSI4MCIgY3k9IjkwIiByPSIxLjUiIGZpbGw9IiNmZmYiIG9wYWNpdHk9IjAuNiIvPjwvc3ZnPg==');">
     </div>
 
+    <div class="ui-layer" id="headerLayer">
+        <header>
+            <h1>Ekantik Dharma</h1>
+            <div class="subtitle">Tap a component to enter its world</div>
+        </header>
+    </div>
+
+    <!-- MAIN MENU -->
+    <div class="main-menu" id="mainMenu">
+        <div class="menu-content">
+
+            <!-- LEFT: ROCKET -->
+            <div class="rocket-wrapper">
+                <div class="destination">
+                    <div class="akshardham-orb"></div>
+                    <h3>Goal: Akshardham</h3>
+                    <small style="color:#aaa;">Ultimate Liberation</small>
+                </div>
+
+                <div class="rocket-stack">
+                    <!-- 1. BHAKTI -->
+                    <div class="rocket-part nose-cone" onclick="enterWorld('bhakti')">
+                        <div class="magnet-icon"></div>
+                        <span>BHAKTI</span>
+                    </div>
+
+                    <!-- 2. VAIRAGYA -->
+                    <div class="rocket-part body-segment-1" onclick="enterWorld('vairagya')">
+                        <span>VAIRAGYA</span>
+                    </div>
+
+                    <!-- 3. GNAN -->
+                    <div class="rocket-part body-segment-2" onclick="enterWorld('gnan')">
+                        <div class="window"></div>
+                        <span>GNAN</span>
+                    </div>
+
+                    <!-- 4. DHARMA -->
+                    <div class="rocket-part base-segment" onclick="enterWorld('dharma')">
+                        <span>DHARMA</span>
+                        <div class="fin-left"></div>
+                        <div class="fin-right"></div>
+                    </div>
+
+                    <!-- 5. FUEL (MAHATMYA) -->
+                    <div class="flame-container" onclick="enterWorld('mahatmya')">
+                        <div class="flame"></div>
+                        <div class="flame main"></div>
+                        <div class="flame"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT: MECHANIC CARD -->
+            <div class="mechanic-card">
+                <div class="mechanic-header">
+                    <span>👨‍🚀</span>
+                    The Pilot & Mechanic
+                </div>
+                <h3>The Aksharbrahma Satpurush</h3>
+                <p>You cannot build this spaceship alone. The <strong>Satpurush</strong> is the Master Mechanic who
+                    helps you install Dharma, Gnan, Vairagya, and Bhakti.</p>
+
+                <div class="quote-box">
+                    "Such an Ekantik Dharma is attained only through the association of such an Ekantik Purush."
+                </div>
+
+                <h3>How to build it?</h3>
+                <ul class="build-list">
+                    <li>Associate with the Satpurush (Prasang).</li>
+                    <li>He gives the strength to imbibe these qualities.</li>
+                    <li>He connects you to the command of Shriji Maharaj.</li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+    <button id="exitBtn" class="back-btn" onclick="exitWorld()">← Back to Ship</button>
+
+    <!-- WORLDS -->
+
+    <!-- 1. DHARMA -->
+    <div id="world-dharma" class="world-container">
+        <div class="dharma-scene">
+            <div class="road">
+                <div class="road-stripes"></div>
+            </div>
+        </div>
+        <div class="hud-panel">
+            <div class="hud-title">1. Dharma (Righteousness)</div>
+            <span class="hud-analogy">The Navigation System & Steering</span>
+            <div class="hud-desc">You are on the highway to Akshardham. Dharma keeps you safe within the lanes.
+                Following the commands (Panch Vartaman, Ahimsa, Brahmacharya) ensures you don't crash off the path.
+            </div>
+            <div class="hud-quote">"No bad thoughts arise in the senses."</div>
+        </div>
+    </div>
+
+    <!-- 2. GNAN -->
+    <div id="world-gnan" class="world-container">
+        <div class="gnan-scene">
+            <div class="body-outline"></div>
+            <div class="soul-light"></div>
+            <div style="position:absolute; color:white; top: 20%; font-size: 0.8rem; letter-spacing: 2px;">SEPARATION OF
+                BODY & ATMA</div>
+        </div>
+        <div class="hud-panel">
+            <div class="hud-title">2. Gnan (Knowledge)</div>
+            <span class="hud-analogy">The X-Ray Vision</span>
+            <div class="hud-desc">See the truth. The body is temporary (the outline), but the Atma is eternal (the
+                light). Gnan is realizing you are the Atma (Soul), distinct from the body and Maya.</div>
+            <div class="hud-quote">"Like a sword and its sheath."</div>
+        </div>
+    </div>
+
+    <!-- 3. VAIRAGYA -->
+    <div id="world-vairagya" class="world-container">
+        <div class="vairagya-scene" id="vairagyaCanvas">
+            <div class="devotee-core"></div>
+            <div class="shield-ring"></div>
+        </div>
+        <div class="hud-panel">
+            <div class="hud-title">3. Vairagya (Detachment)</div>
+            <span class="hud-analogy">The Non-Stick Forcefield</span>
+            <div class="hud-desc">The world is full of distractions (sense objects). Vairagya is the shield that makes
+                them bounce off. You interact with the world, but nothing sticks to your atma (soul).</div>
+            <div class="hud-quote">"No desire to enjoy sense objects."</div>
+        </div>
+    </div>
+
+    <!-- 4. BHAKTI -->
+    <div id="world-bhakti" class="world-container">
+        <div class="bhakti-scene" id="bhaktiCanvas">
+            <div class="magnet-center">🕉️</div>
+        </div>
+        <div class="hud-panel">
+            <div class="hud-title">4. Bhakti (Devotion)</div>
+            <span class="hud-analogy">The Super Magnet</span>
+            <div class="hud-desc">Feel the pull. Bhakti is intense affection. Your mind and senses should rush towards
+                God like iron filings rushing to a magnet.</div>
+            <div class="hud-quote">"Like a pebble sticking to butter."</div>
+        </div>
+    </div>
+
+    <!-- 5. MAHATMYA -->
+    <div id="world-mahatmya" class="world-container">
+        <div class="mahatmya-scene" id="mahatmyaCanvas">
+            <div class="sun-core"></div>
+        </div>
+        <div class="hud-panel">
+            <div class="hud-title">Mahatmya (Greatness)</div>
+            <span class="hud-analogy">The Infinite Fuel</span>
+            <div class="hud-desc">This is the powerhouse. Understanding God's infinite greatness provides the energy
+                that keeps devotion alive forever.</div>
+            <div class="hud-quote">"With Mahatmya, weak faith becomes strong."</div>
+        </div>
+    </div>
+
+    <script>
+        let animationFrameId;
+        let vairagyaParticles = [];
+
+        function enterWorld(worldName) {
+            document.getElementById('mainMenu').classList.add('hidden');
+            document.getElementById('headerLayer').style.opacity = '0';
+
+            const world = document.getElementById('world-' + worldName);
+            world.classList.add('active');
+            document.getElementById('exitBtn').classList.add('visible');
+
+            if (worldName === 'vairagya') startVairagya();
+            if (worldName === 'bhakti') startBhakti();
+            if (worldName === 'gnan') setTimeout(() => document.querySelector('.gnan-scene').classList.add('gnan-active'), 100);
+            if (worldName === 'mahatmya') startMahatmya();
+        }
+
+        function exitWorld() {
+            document.getElementById('mainMenu').classList.remove('hidden');
+            document.getElementById('headerLayer').style.opacity = '1';
+            document.getElementById('exitBtn').classList.remove('visible');
+
+            document.querySelectorAll('.world-container').forEach(el => {
+                el.classList.remove('active');
+            });
+
+            cancelAnimationFrame(animationFrameId);
+            document.querySelector('.gnan-scene').classList.remove('gnan-active');
+
+            // Clear dynamic elements
+            const dynamicContainers = ['vairagyaCanvas', 'bhaktiCanvas', 'mahatmyaCanvas'];
+            dynamicContainers.forEach(id => {
+                const el = document.getElementById(id);
+                const staticChildren = Array.from(el.children).filter(c => c.classList.contains('devotee-core') || c.classList.contains('shield-ring') || c.classList.contains('magnet-center') || c.classList.contains('sun-core'));
+                el.innerHTML = '';
+                staticChildren.forEach(child => el.appendChild(child));
+            });
+            vairagyaParticles = [];
+        }
+
+        // --- VAIRAGYA: BOUNCING PHYSICS ---
+        function startVairagya() {
+            const container = document.getElementById('vairagyaCanvas');
+            const debrisCount = 40;
+            const centerX = window.innerWidth / 2;
+            const centerY = window.innerHeight / 2;
+            const shieldRadius = 85;
+
+            vairagyaParticles = [];
+
+            for (let i = 0; i < debrisCount; i++) {
+                const el = document.createElement('div');
+                el.classList.add('debris');
+                const size = Math.random() * 20 + 10;
+                el.style.width = size + 'px';
+                el.style.height = size + 'px';
+                el.style.backgroundColor = `hsl(${Math.random() * 360}, 70%, 50%)`;
+                container.appendChild(el);
+
+                const angle = Math.random() * Math.PI * 2;
+                const distance = Math.max(window.innerWidth, window.innerHeight) * 0.8;
+                const x = centerX + Math.cos(angle) * distance;
+                const y = centerY + Math.sin(angle) * distance;
+
+                const speed = Math.random() * 3 + 2;
+                const dx = centerX - x;
+                const dy = centerY - y;
+                const distToCenter = Math.sqrt(dx * dx + dy * dy);
+
+                vairagyaParticles.push({
+                    el: el,
+                    x: x,
+                    y: y,
+                    vx: (dx / distToCenter) * speed,
+                    vy: (dy / distToCenter) * speed,
+                    state: 'incoming'
+                });
+            }
+
+            function animate() {
+                vairagyaParticles.forEach(p => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+
+                    const dx = centerX - p.x;
+                    const dy = centerY - p.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (p.state === 'incoming' && dist <= shieldRadius) {
+                        p.state = 'bounced';
+                        p.vx = -p.vx * 1.2;
+                        p.vy = -p.vy * 1.2;
+                        p.vx += (Math.random() - 0.5) * 2;
+                        p.vy += (Math.random() - 0.5) * 2;
+                    }
+
+                    if (p.state === 'bounced' && dist > Math.max(window.innerWidth, window.innerHeight)) {
+                        const angle = Math.random() * Math.PI * 2;
+                        const startDist = Math.max(window.innerWidth, window.innerHeight) * 0.8;
+                        p.x = centerX + Math.cos(angle) * startDist;
+                        p.y = centerY + Math.sin(angle) * startDist;
+
+                        const newDx = centerX - p.x;
+                        const newDy = centerY - p.y;
+                        const newDist = Math.sqrt(newDx * newDx + newDy * newDy);
+                        const speed = Math.random() * 3 + 2;
+
+                        p.vx = (newDx / newDist) * speed;
+                        p.vy = (newDy / newDist) * speed;
+                        p.state = 'incoming';
+                    }
+
+                    p.el.style.left = p.x + 'px';
+                    p.el.style.top = p.y + 'px';
+                });
+
+                if (document.getElementById('world-vairagya').classList.contains('active')) {
+                    animationFrameId = requestAnimationFrame(animate);
+                }
+            }
+            animate();
+        }
+
+        function startBhakti() {
+            const container = document.getElementById('bhaktiCanvas');
+            const particleCount = 100;
+            const centerX = window.innerWidth / 2;
+            const centerY = window.innerHeight / 2;
+
+            for (let i = 0; i < particleCount; i++) {
+                const el = document.createElement('div');
+                el.classList.add('bhakti-particle');
+                const size = Math.random() * 4 + 2;
+                el.style.width = size + 'px';
+                el.style.height = size + 'px';
+                el.style.opacity = Math.random();
+
+                let x = Math.random() * window.innerWidth;
+                let y = Math.random() * window.innerHeight;
+                container.appendChild(el);
+                const speed = Math.random() * 5 + 2;
+
+                function animateBhakti() {
+                    const dx = centerX - x;
+                    const dy = centerY - y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < 30) {
+                        x = Math.random() * window.innerWidth;
+                        y = Math.random() * window.innerHeight;
+                        if (Math.abs(x - centerX) < 100) x += 200;
+                    } else {
+                        x += (dx / dist) * speed;
+                        y += (dy / dist) * speed;
+                    }
+
+                    el.style.left = x + 'px';
+                    el.style.top = y + 'px';
+
+                    if (document.getElementById('world-bhakti').classList.contains('active')) {
+                        requestAnimationFrame(animateBhakti);
+                    }
+                }
+                animateBhakti();
+            }
+        }
+
+        function startMahatmya() {
+            const container = document.getElementById('mahatmyaCanvas');
+            for (let i = 0; i < 12; i++) {
+                const ray = document.createElement('div');
+                ray.classList.add('ray');
+                ray.style.transform = `rotate(${i * 30}deg)`;
+                container.appendChild(ray);
+            }
+        }
+    </script>
 </body>
+
 </html>
