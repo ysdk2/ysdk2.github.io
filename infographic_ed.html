@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ekantik Dharma: The Spaceship to Akshardham</title>
+    <style>
+        :root {
+            --space-bg: #0b0d17;
+            --star-color: #ffffff;
+            --text-color: #ecf0f1;
+            --accent-gold: #f1c40f;
+            --dharma-color: #e67e22; /* Orange */
+            --gnan-color: #3498db;   /* Blue */
+            --vairagya-color: #2ecc71; /* Green */
+            --bhakti-color: #9b59b6; /* Purple/Gold mix */
+            --mahatmya-color: #c0392b; /* Red */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--space-bg);
+            color: var(--text-color);
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Dynamic Star Background */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, #eee, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 40px 70px, #fff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 50px 160px, #ddd, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 90px 40px, #fff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 130px 80px, #fff, rgba(0,0,0,0));
+            background-repeat: repeat;
+            background-size: 200px 200px;
+            animation: twinkle 5s infinite linear;
+        }
+
+        @keyframes twinkle {
+            from {background-position: 0 0;}
+            to {background-position: 0 200px;}
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            max-width: 800px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: var(--accent-gold);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #bdc3c7;
+            font-style: italic;
+        }
+
+        /* Main Content Layout */
+        .main-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 50px;
+            padding: 20px;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        /* The Spaceship Construction */
+        .rocket-container {
+            position: relative;
+            width: 300px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-bottom: 50px; /* For flames */
+        }
+
+        .destination {
+            text-align: center;
+            margin-bottom: 20px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .akshardham-orb {
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle at 30% 30%, #fff, #f1c40f, #e67e22);
+            border-radius: 50%;
+            box-shadow: 0 0 30px #f1c40f;
+            margin: 0 auto 10px;
+        }
+
+        /* Rocket Parts */
+        .rocket-part {
+            width: 180px;
+            border: 2px solid rgba(255,255,255,0.2);
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+            z-index: 5; /* Ensure parts are above flames */
+        }
+
+        .rocket-part:hover {
+            transform: scale(1.05);
+            z-index: 20;
+            box-shadow: 0 0 20px rgba(255,255,255,0.5);
+        }
+
+        /* 1. Nose Cone (Bhakti) */
+        .nose-cone {
+            height: 120px;
+            background: linear-gradient(135deg, var(--bhakti-color), #8e44ad);
+            border-radius: 50% 50% 10% 10%;
+            flex-direction: column;
+            padding-top: 30px;
+        }
+        
+        .magnet-icon {
+            width: 30px;
+            height: 30px;
+            border: 4px solid #fff;
+            border-bottom: none;
+            border-radius: 30px 30px 0 0;
+            margin-bottom: 5px;
+        }
+
+        /* 2. Body Segment 1 (Vairagya) */
+        .body-segment-1 {
+            height: 100px;
+            background: linear-gradient(90deg, #27ae60, var(--vairagya-color), #27ae60);
+            width: 180px;
+            background-size: 200% 200%;
+            animation: shine 3s infinite linear;
+        }
+
+        @keyframes shine {
+            0% {background-position: 0% 50%;}
+            100% {background-position: 100% 50%;}
+        }
+
+        /* 3. Body Segment 2 (Gnan) */
+        .body-segment-2 {
+            height: 100px;
+            background: var(--gnan-color);
+        }
+
+        .window {
+            width: 50px;
+            height: 50px;
+            background: #81ecec;
+            border-radius: 50%;
+            border: 4px solid #95a5a6;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+        }
+
+        /* 4. Base & Fins (Dharma) */
+        .base-segment {
+            height: 80px;
+            width: 180px;
+            background: var(--dharma-color);
+            border-radius: 0 0 10px 10px;
+        }
+
+        .fin-left, .fin-right {
+            position: absolute;
+            bottom: 0;
+            width: 0;
+            height: 0;
+            border-bottom: 80px solid #d35400;
+            z-index: 1;
+        }
+
+        .fin-left {
+            left: -40px;
+            border-right: 40px solid transparent;
+            border-left: 0;
+        }
+
+        .fin-right {
+            right: -40px;
+            border-left: 40px solid transparent;
+            border-right: 0;
+        }
+
+        /* 5. Fuel/Flame (Mahatmya) */
+        .flame-container {
+            position: absolute;
+            bottom: -60px;
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            z-index: 0; /* Behind the rocket base */
+            cursor: pointer;
+        }
+
+        .flame {
+            width: 40px;
+            height: 60px;
+            background: linear-gradient(to top, #f1c40f, var(--mahatmya-color));
+            border-radius: 50% 50% 20% 20%;
+            animation: flicker 0.2s infinite alternate;
+            margin: 0 5px;
+            box-shadow: 0 0 20px var(--mahatmya-color);
+        }
+
+        .flame.main {
+            height: 80px;
+            width: 50px;
+        }
+
+        @keyframes flicker {
+            0% {transform: scale(1);}
+            100% {transform: scale(1.1) translateY(2px);}
+        }
+
+        /* Interactive Info Cards (Tooltips) */
+        .info-card {
+            position: absolute;
+            left: 220px; /* Default for rocket parts */
+            top: 50%;
+            transform: translateY(-50%);
+            width: 280px;
+            background: rgba(255, 255, 255, 0.95);
+            color: #2c3e50;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            pointer-events: none;
+            z-index: 100;
+            text-align: left;
+            font-weight: normal;
+            text-shadow: none;
+        }
+
+        .info-card::before {
+            content: "";
+            position: absolute;
+            left: -10px;
+            top: 50%;
+            transform: translateY(-50%);
+            border-width: 10px 10px 10px 0;
+            border-style: solid;
+            border-color: transparent rgba(255, 255, 255, 0.95) transparent transparent;
+        }
+
+        /* Specific fix for the Mahatmya (Fuel) Card */
+        /* Move it further right to clear the fins (Rocket width 300, Fin edge approx 280) */
+        .fuel-card {
+            left: 290px !important; 
+            top: 10px !important;
+            bottom: auto !important;
+            transform: none !important;
+        }
+
+        .rocket-part:hover .info-card,
+        .flame-container:hover .info-card {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* Slight slide animation for desktop */
+        .rocket-part:hover .info-card {
+            left: 230px;
+        }
+        .flame-container:hover .fuel-card {
+            left: 300px !important; /* Slide out slightly further on hover */
+        }
+
+        .card-title {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+            display: block;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 3px;
+        }
+        
+        .card-analogy {
+            color: #e74c3c;
+            font-weight: bold;
+            display: block;
+            margin: 5px 0;
+        }
+
+        /* The Mechanic Section */
+        .mechanic-section {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 30px;
+            max-width: 400px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,255,255,0.2);
+            height: fit-content;
+        }
+
+        .mechanic-title {
+            color: var(--accent-gold);
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .mechanic-icon {
+            font-size: 2rem;
+        }
+
+        .quote-box {
+            background: rgba(0,0,0,0.3);
+            border-left: 4px solid var(--accent-gold);
+            padding: 10px;
+            margin-top: 15px;
+            font-style: italic;
+            font-size: 0.9rem;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .nav-helper {
+            margin-top: 20px;
+            color: var(--accent-gold);
+            font-size: 0.9rem;
+            text-align: center;
+            display: none; 
+        }
+        @media (hover: none) {
+            .nav-helper { display: block; }
+        }
+
+        /* Responsiveness for mobile */
+        @media (max-width: 800px) {
+            .main-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            /* Center tooltips below the items on mobile */
+            .info-card, .fuel-card {
+                left: 50% !important; /* Force override for fuel card */
+                top: 100% !important;
+                transform: translateX(-50%) !important;
+                width: 250px;
+                margin-top: 15px;
+                z-index: 200;
+                position: absolute;
+            }
+
+            .info-card::before {
+                left: 50%;
+                top: -10px;
+                transform: translateX(-50%) rotate(90deg);
+                border-color: transparent rgba(255, 255, 255, 0.95) transparent transparent;
+                /* Adjust arrow direction to point up */
+                border-width: 0 10px 10px 10px;
+                border-color: transparent transparent rgba(255, 255, 255, 0.95) transparent;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="stars"></div>
+
+    <header>
+        <h1>Ekantik Dharma</h1>
+        <div class="subtitle">The Path to Ultimate Liberation (Akshardham)</div>
+        <p class="nav-helper">Tap the rocket parts to see the details!</p>
+    </header>
+
+    <div class="main-container">
+        
+        <!-- THE ROCKET VISUAL -->
+        <div class="rocket-container">
+            
+            <!-- Destination -->
+            <div class="destination">
+                <div class="akshardham-orb"></div>
+                <h3>Goal: Akshardham</h3>
+                <small>Ultimate Liberation</small>
+            </div>
+
+            <!-- 1. BHAKTI (Engine/Magnet) -->
+            <div class="rocket-part nose-cone">
+                <div class="magnet-icon"></div>
+                <span>BHAKTI</span>
+                
+                <div class="info-card">
+                    <span class="card-title" style="color:var(--bhakti-color)">4. Bhakti (Devotion)</span>
+                    <span class="card-analogy">Analogy: The Super Magnet Engine</span>
+                    <p>Just as a magnet sticks to iron, Bhakti is when the mind sticks to God's Murti like "a pebble sticks to butter."</p>
+                    <p><strong>Definition:</strong> Intense affection for God combined with knowledge of His greatness. Believing oneself to be Aksharrup.</p>
+                </div>
+            </div>
+
+            <!-- 2. VAIRAGYA (Non-Stick Coating) -->
+            <div class="rocket-part body-segment-1">
+                <span>VAIRAGYA</span>
+                
+                <div class="info-card">
+                    <span class="card-title" style="color:var(--vairagya-color)">3. Vairagya (Detachment)</span>
+                    <span class="card-analogy">Analogy: The Non-Stick Coating</span>
+                    <p>A coating that prevents space debris (worldly desires) from sticking to the ship. Even if you have nice things, you don't care about them.</p>
+                    <p><strong>Definition:</strong> Having no attachment to anything created (Maya). Keeping the mind constantly focused only on God.</p>
+                </div>
+            </div>
+
+            <!-- 3. GNAN (Map/Window) -->
+            <div class="rocket-part body-segment-2">
+                <div class="window"></div>
+                <span style="position: absolute; bottom: 5px;">GNAN</span>
+                
+                <div class="info-card">
+                    <span class="card-title" style="color:var(--gnan-color)">2. Gnan (Knowledge)</span>
+                    <span class="card-analogy">Analogy: X-Ray Glasses & Map</span>
+                    <p>Knowing the difference between the ship (body) and the pilot (soul), like a "sword and its sheath."</p>
+                    <p><strong>Definition:</strong> Realizing one's true self as Atma, distinct from the body and Gunas. Identifying with Aksharbrahma.</p>
+                </div>
+            </div>
+
+            <!-- 4. DHARMA (Steering/Fins) -->
+            <div class="rocket-part base-segment">
+                <span>DHARMA</span>
+                <div class="fin-left"></div>
+                <div class="fin-right"></div>
+                
+                <div class="info-card">
+                    <span class="card-title" style="color:var(--dharma-color)">1. Dharma (Righteousness)</span>
+                    <span class="card-analogy">Analogy: Steering Wheel & Navigation</span>
+                    <p>Keeps the ship on the correct path. Without it, you crash.</p>
+                    <p><strong>Definition:</strong> Following God's commands (non-violence, celibacy, panch vartaman). No bad thoughts arising in the mind.</p>
+                </div>
+            </div>
+
+            <!-- 5. MAHATMYA (Fuel) -->
+            <div class="flame-container">
+                <div class="flame"></div>
+                <div class="flame main"></div>
+                <div class="flame"></div>
+                
+                <!-- Use the fuel-card class to apply the positioning fix -->
+                <div class="info-card fuel-card">
+                    <span class="card-title" style="color:var(--mahatmya-color)">Mahatmya (Greatness)</span>
+                    <span class="card-analogy">Analogy: The Infinite Power Fuel</span>
+                    <p>Without this fuel, the engine (Bhakti) stops working. It makes faith and trust strong.</p>
+                    <p><strong>Definition:</strong> The profound understanding of God's immeasurable greatness. Realizing God is infinitely great.</p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- THE GUIDE SECTION -->
+        <div class="mechanic-section">
+            <div class="mechanic-title">
+                <span class="mechanic-icon">👨‍🚀</span>
+                The Pilot & Mechanic
+            </div>
+            <h3>The Aksharbrahma Satpurush</h3>
+            <p>You cannot build this spaceship alone.</p>
+            <p>The <strong>Satpurush</strong> is the Master Mechanic who helps you install Dharma, Gnan, Vairagya, and Bhakti.</p>
+            
+            <div class="quote-box">
+                "Such an Ekantik Dharma is attained only through the association of such an Ekantik Purush."
+            </div>
+            <br>
+            <p><strong>How to build it?</strong></p>
+            <ul style="margin-left: 20px; margin-top: 10px;">
+                <li>Associate with the Satpurush (Prasang).</li>
+                <li>He gives the strength to imbibe these qualities.</li>
+                <li>He connects you to the command of Shriji Maharaj.</li>
+            </ul>
+        </div>
+
+    </div>
+
+</body>
+</html>
