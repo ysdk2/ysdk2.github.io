@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sagun & Nirgun: BAPS Swaminarayan Tradition</title>
+    <style>
+        :root {
+            --sagun-color: #d4af37; /* Gold */
+            --sagun-bg: #fffbf0;
+            --nirgun-color: #008eb0; /* Cyan/Teal */
+            --nirgun-bg: #f0faff;
+            --text-dark: #333;
+            --white: #ffffff;
+            --accent: #ff6b6b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: var(--text-dark);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        /* --- Header --- */
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #2c3e50, #4ca1af);
+            color: white;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        header h2 {
+            font-size: 1.2rem;
+            font-weight: 300;
+            opacity: 0.9;
+        }
+
+        .quote-box {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            margin-top: 20px;
+            border-left: 5px solid var(--sagun-color);
+            font-style: italic;
+            display: inline-block;
+            max-width: 800px;
+        }
+
+        /* --- Synthesis Section --- */
+        .synthesis {
+            text-align: center;
+            padding: 30px;
+            background: #fff;
+            border-bottom: 1px solid #eee;
+        }
+        .synthesis h3 { color: #555; margin-bottom: 15px; }
+        .synthesis p { max-width: 700px; margin: 0 auto; color: #666; }
+
+        /* --- Split Definitions --- */
+        .definitions-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        @media (max-width: 768px) {
+            .definitions-grid { grid-template-columns: 1fr; }
+        }
+
+        .col {
+            padding: 40px;
+        }
+
+        .col-sagun {
+            background-color: var(--sagun-bg);
+            border-right: 1px solid #eee;
+        }
+
+        .col-nirgun {
+            background-color: var(--nirgun-bg);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            color: white;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .badge.sagun { background-color: var(--sagun-color); }
+        .badge.nirgun { background-color: var(--nirgun-color); }
+
+        .concept-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .list-group {
+            list-style: none;
+            margin-top: 15px;
+        }
+
+        .list-group li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .list-group li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+        .col-sagun .list-group li::before { color: var(--sagun-color); }
+        .col-nirgun .list-group li::before { color: var(--nirgun-color); }
+
+        /* --- Analogies Section --- */
+        .section-header {
+            text-align: center;
+            padding: 40px 20px 20px;
+            background: #fff;
+        }
+        .section-header h2 { font-size: 2rem; color: #333; }
+
+        .analogy-card {
+            margin: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            background: white;
+        }
+
+        .analogy-visual-area {
+            height: 300px;
+            position: relative;
+            background: #f9f9f9;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .analogy-text {
+            padding: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .analogy-text h3 { margin-bottom: 10px; }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            margin-top: 10px;
+        }
+        .comparison-table td {
+            padding: 8px;
+            border-bottom: 1px solid #eee;
+            vertical-align: top;
+        }
+        .comparison-table strong { display: block; margin-bottom: 3px; }
+        .text-sagun { color: #b8860b; }
+        .text-nirgun { color: #006080; }
+
+        /* --- ANALOGY 1: SUN VISUALS --- */
+        .sun-bg {
+            background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364); /* Space background */
+            width: 100%; height: 100%;
+            position: relative;
+        }
+        
+        .sun-body {
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, #ffd700, #ff8c00);
+            border-radius: 50%;
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 50px #ff8c00, 0 0 20px #ffd700;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #5a3a00;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-align: center;
+            animation: pulseSun 3s infinite ease-in-out;
+        }
+
+        .sun-rays {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%; height: 100%;
+            z-index: 1;
+        }
+
+        .ray {
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 300px;
+            height: 2px;
+            background: linear-gradient(90deg, rgba(255,255,255,0.8), transparent);
+            transform-origin: left center;
+        }
+
+        .planet {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #444;
+            top: 20%; left: 20%;
+            box-shadow: inset -5px -5px 10px rgba(0,0,0,0.5);
+        }
+        .planet::after {
+            content: "Object";
+            color: #aaa;
+            font-size: 10px;
+            position: absolute;
+            top: 35px;
+        }
+
+        @keyframes pulseSun {
+            0% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 40px #ff8c00; }
+            50% { transform: translate(-50%, -50%) scale(1.1); box-shadow: 0 0 70px #ff8c00; }
+            100% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 40px #ff8c00; }
+        }
+
+        /* --- ANALOGY 2: OCEAN VISUALS --- */
+        .ocean-bg {
+            background: linear-gradient(to bottom, #87CEEB 0%, #006994 100%);
+            width: 100%; height: 100%;
+            position: relative;
+        }
+
+        .tiny-universe {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255,255,255,0.6);
+            border-radius: 50%;
+            animation: float 5s infinite ease-in-out;
+        }
+
+        .magnify-glass {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            width: 120px;
+            height: 120px;
+            background: rgba(255,255,255,0.9);
+            border: 5px solid #333;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .molecule {
+            display: flex;
+            align-items: center;
+        }
+        .atom-o { width: 30px; height: 30px; background: #ff6b6b; border-radius: 50%; margin: 0 5px; position: relative; }
+        .atom-h { width: 15px; height: 15px; background: #ccc; border-radius: 50%; }
+        .molecule-label { font-size: 0.7rem; color: #333; margin-top: 5px; font-weight: bold; text-align: center; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* --- ANALOGY 3: GOLD VISUALS --- */
+        .gold-bg {
+            background: #333;
+            width: 100%; height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .crown-container {
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .crown-svg {
+            width: 120px;
+            filter: drop-shadow(0 0 10px gold);
+            transition: opacity 0.3s;
+        }
+
+        .element-overlay {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 80px;
+            border: 2px solid gold;
+            color: gold;
+            font-size: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            background: rgba(0,0,0,0.8);
+            transition: opacity 0.3s;
+            border-radius: 5px;
+        }
+        .element-overlay span { font-size: 0.8rem; }
+
+        .crown-container:hover .element-overlay { opacity: 1; }
+        .crown-container:hover .crown-svg { opacity: 0.3; }
+
+        .hover-hint {
+            position: absolute;
+            bottom: 20px;
+            color: #aaa;
+            font-size: 0.8rem;
+        }
+
+        /* --- Application Flowchart --- */
+        .flowchart {
+            padding: 40px;
+            background: #fdfdfd;
+        }
+        .flowchart-title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .steps-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .step-box {
+            flex: 1;
+            min-width: 250px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .step-icon {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            display: inline-block;
+            padding: 15px;
+            border-radius: 50%;
+            background: #f0f0f0;
+        }
+
+        .step-arrow {
+            display: none; /* Hidden on mobile */
+            font-size: 2rem;
+            color: #ccc;
+            align-self: center;
+        }
+
+        @media(min-width: 769px) {
+            .step-arrow { display: block; }
+        }
+
+        /* --- Footer --- */
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9rem;
+        }
+
+        /* Helper for labels inside visuals */
+        .label {
+            position: absolute;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Sagun & Nirgun</h1>
+        <h2>Understanding the Nature of Parabrahma Purushottam Narayan</h2>
+        <div class="quote-box">
+            "Sagun-Nirgunpanu Haribhaktne janyu joie, nikar to gotha khay" <br>
+            <small>(A devotee must understand the sagun and nirgun aspects of God, otherwise they will be misled) - Shriji Maharaj</small>
+        </div>
+    </header>
+
+    <!-- Synthesis Intro -->
+    <div class="synthesis">
+        <h3>A Divine Harmony</h3>
+        <p>In the BAPS Swaminarayan tradition, these terms are not contradictions. <br><strong>"Parabrahma's sagun-ness and nirgun-ness are both real, natural, ultimate, and eternal."</strong> They represent the divine opulence (alaukik aishwarya) of God.</p>
+    </div>
+
+    <!-- Split Definitions -->
+    <div class="definitions-grid">
+        <!-- SAGUN SIDE -->
+        <div class="col col-sagun">
+            <span class="badge sagun">Sagun (सगुण)</span>
+            <div class="concept-title">With Form & Qualities</div>
+            
+            <p><strong>1. Based on Qualities:</strong><br> Endowed with infinite auspicious qualities (<em>anant kalyankari guno</em>) like power, truth, compassion, and non-violence.</p>
+            <br>
+            <p><strong>2. Based on Form:</strong><br> "Extremely Vast Form" (<em>atyant motu swarup</em>). Compared to God's grandeur, infinite universes appear as tiny as atoms.</p>
+        </div>
+
+        <!-- NIRGUN SIDE -->
+        <div class="col col-nirgun">
+            <span class="badge nirgun">Nirgun (निर्गुण)</span>
+            <div class="concept-title">Subtle & Pure</div>
+            
+            <p><strong>1. Based on Qualities:</strong><br> Devoid of Mayik qualities (<em>mayik guno thi rahit</em>). Free from Sattva, Rajas, Tamas, and vices like lust or anger.</p>
+            <br>
+            <p><strong>2. Based on Form:</strong><br> "Extremely Subtle Form" (<em>atyant sukshma swarup</em>). Also known as the <em>Anvay</em> form. Like the sky or soul, He pervades all yet remains unattached.</p>
+        </div>
+    </div>
+
+    <!-- ANALOGIES SECTION -->
+    <div class="section-header">
+        <h2>Visual Analogies</h2>
+        <p>Understanding the dual nature through examples</p>
+    </div>
+
+    <!-- Analogy 1: The Sun -->
+    <div class="analogy-card">
+        <div class="analogy-visual-area">
+            <div class="sun-bg">
+                <!-- Rays (Nirgun aspect) -->
+                <div class="sun-rays" id="rays"></div>
+                <!-- Sun Body (Sagun aspect) -->
+                <div class="sun-body">SAGUN<br>(Source)</div>
+                <!-- External Object -->
+                <div class="planet"></div>
+                <div class="label" style="top: 25%; left: 25%;">Light touches object<br>but remains pure</div>
+                <div class="label" style="bottom: 10px; left: 50%; transform: translateX(-50%);">The Sun & Its Light coexist</div>
+            </div>
+        </div>
+        <div class="analogy-text">
+            <h3>1. The Sun Analogy (Purity & Pervasiveness)</h3>
+            <table class="comparison-table">
+                <tr>
+                    <td class="text-sagun"><strong>Sagun (The Disc)</strong> Represents the visible, glorious source of power. Like God's form endowed with strength and opulence.</td>
+                    <td class="text-nirgun"><strong>Nirgun (The Light)</strong> The sunlight travels everywhere (pervasive), touches dirt and earth, but remains fundamentally pure and unattached.</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- Analogy 2: The Ocean -->
+    <div class="analogy-card">
+        <div class="analogy-visual-area">
+            <div class="ocean-bg">
+                <!-- Floating dots -->
+                <div class="tiny-universe" style="top: 20%; left: 10%;"></div>
+                <div class="tiny-universe" style="top: 40%; left: 30%;"></div>
+                <div class="tiny-universe" style="top: 15%; left: 60%;"></div>
+                <div class="tiny-universe" style="top: 50%; left: 80%;"></div>
+                <div class="label" style="top: 10px; left: 10px;">Infinite Universes = Atoms</div>
+                
+                <!-- Magnifying Glass -->
+                <div class="magnify-glass">
+                    <div class="molecule">
+                        <div class="atom-h"></div>
+                        <div class="atom-o"></div>
+                        <div class="atom-h"></div>
+                    </div>
+                    <div class="molecule-label">Pure H₂O<br>(Essence)</div>
+                </div>
+                <div class="label" style="bottom: 145px; right: 20px; color: #333; background:none; font-weight:bold;">Zoom: Nirgun Essence</div>
+            </div>
+        </div>
+        <div class="analogy-text">
+            <h3>2. The Ocean Analogy (Magnitude & Essence)</h3>
+            <table class="comparison-table">
+                <tr>
+                    <td class="text-sagun"><strong>Sagun (The Vast Ocean)</strong> God's "extremely vast form". Infinite universes float in it like tiny specks or atoms.</td>
+                    <td class="text-nirgun"><strong>Nirgun (The H₂O Molecule)</strong> The fundamental, pure essence. Regardless of the ocean's size or contents, its core nature is pure water, devoid of impurities.</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- Analogy 3: Gold -->
+    <div class="analogy-card">
+        <div class="analogy-visual-area">
+            <div class="gold-bg">
+                <div class="crown-container">
+                    <!-- SVG Crown -->
+                    <svg class="crown-svg" viewBox="0 0 24 24" fill="#FFD700" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M5 16L3 5L8.5 10L12 4L15.5 10L21 5L19 16H5ZM19 19C19 19.5523 18.5523 20 18 20H6C5.44772 20 5 19.5523 5 19V17H19V19Z" stroke="#B8860B" stroke-width="1"/>
+                    </svg>
+                    <div class="label" style="top: -20px; left: 50%; transform: translateX(-50%); white-space:nowrap;">Sagun: Divine Attributes</div>
+                    
+                    <!-- Overlay for Nirgun -->
+                    <div class="element-overlay">
+                        Au
+                        <span>Pure Gold</span>
+                    </div>
+                </div>
+                <div class="hover-hint">Hover over the Crown to see the Essence</div>
+            </div>
+        </div>
+        <div class="analogy-text">
+            <h3>3. The Gold Analogy (Application & Conviction)</h3>
+            <table class="comparison-table">
+                <tr>
+                    <td class="text-sagun"><strong>Sagun (The Ornament)</strong> The intricate form (Human-like) possessing value, beauty, and artistry (Kalyankari guno).</td>
+                    <td class="text-nirgun"><strong>Nirgun (The Element)</strong> The devotee uses the "X-ray of Faith" to see that despite the form, it is 100% pure gold, flawless and untarnished by base metals (Maya).</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- Practical Application -->
+    <div class="flowchart">
+        <h2 class="flowchart-title">Practical Application: The Devotee's Path</h2>
+        <p style="text-align:center; margin-bottom:20px; color:#666;">How to become Nirgun and overcome Maya</p>
+        
+        <div class="steps-container">
+            <!-- Step 1 -->
+            <div class="step-box">
+                <div class="step-icon">🤝</div>
+                <h4>Association</h4>
+                <p>Associate with the <strong>Aksharbrahma Satpurush</strong>. Following his commands is the "Nirgun Path".</p>
+            </div>
+
+            <div class="step-arrow">➝</div>
+
+            <!-- Step 2 -->
+            <div class="step-box">
+                <div class="step-icon">🛡️</div>
+                <h4>Conviction (Nishchay)</h4>
+                <p>Develop firm faith that God is <strong>Nir-dosh</strong> (flawless). Do not perceive human flaws (<em>manushyabhav</em>) in Him.</p>
+            </div>
+
+            <div class="step-arrow">➝</div>
+
+            <!-- Step 3 -->
+            <div class="step-box">
+                <div class="step-icon">✨</div>
+                <h4>Result</h4>
+                <p>One transcends Maya. Even if the body remains, the devotee is considered <strong>Nirgun</strong> and pure.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p><strong>Essence:</strong> Understanding Sagun and Nirgun means recognizing God as both infinitely glorious and perfectly pure, possessing all divine attributes while being completely untouched by any worldly imperfection.</p>
+    </footer>
+
+    <!-- JS to generate rays dynamically -->
+    <script>
+        const raysContainer = document.getElementById('rays');
+        for(let i=0; i<12; i++) {
+            let ray = document.createElement('div');
+            ray.className = 'ray';
+            ray.style.transform = `translate(-50%, -50%) rotate(${i * 30}deg)`;
+            raysContainer.appendChild(ray);
+        }
+    </script>
+</div>
+
+</body>
+</html>
